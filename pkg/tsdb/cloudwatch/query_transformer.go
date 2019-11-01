@@ -3,7 +3,6 @@ package cloudwatch
 import (
 	"fmt"
 	"sort"
-	"strings"
 
 	"github.com/grafana/grafana/pkg/components/simplejson"
 	"github.com/grafana/grafana/pkg/tsdb"
@@ -15,19 +14,11 @@ import (
 // the incoming query had more than one stat, it will ge an id like `query[RefId]_[StatName]`, eg queryC_Average
 func (e *CloudWatchExecutor) transformRequestQueriesToCloudWatchQueries(requestQueries []*requestQuery) (map[string]*cloudWatchQuery, error) {
 	cloudwatchQueries := make(map[string]*cloudWatchQuery)
+	metricStatCounter := 1
+	expressionCounter := 1
 	for _, requestQuery := range requestQueries {
 		for _, stat := range requestQuery.Statistics {
-			id := requestQuery.Id
-			if id == "" {
-				id = fmt.Sprintf("query%s", requestQuery.RefId)
-			}
-			if len(requestQuery.Statistics) > 1 {
-				id = fmt.Sprintf("%s_%v", id, strings.ReplaceAll(*stat, ".", "_"))
-			}
-
 			query := &cloudWatchQuery{
-				Id:             id,
-				UserDefinedId:  requestQuery.Id,
 				RefId:          requestQuery.RefId,
 				Region:         requestQuery.Region,
 				Namespace:      requestQuery.Namespace,
@@ -41,6 +32,21 @@ func (e *CloudWatchExecutor) transformRequestQueriesToCloudWatchQueries(requestQ
 				HighResolution: requestQuery.HighResolution,
 				MatchExact:     requestQuery.MatchExact,
 			}
+
+			id := ""
+			if query.isMetricStat() {
+				id = fmt.Sprintf("m%d", metricStatCounter)
+				metricStatCounter++
+			} else {
+				id = fmt.Sprintf("e%d", expressionCounter)
+				expressionCounter++
+			}
+
+			if requestQuery.Id != "" {
+				id = requestQuery.Id
+			}
+
+			query.Id = id
 
 			if _, ok := cloudwatchQueries[id]; !ok {
 				cloudwatchQueries[id] = query
@@ -76,6 +82,7 @@ func (e *CloudWatchExecutor) transformQueryResponseToQueryResult(cloudwatchRespo
 		timeSeries := make(tsdb.TimeSeriesSlice, 0)
 
 		searchExpressions := []string{}
+		ids := []string{}
 		requestExceededMaxLimit := false
 		for _, response := range responses {
 			timeSeries = append(timeSeries, *response.series...)
@@ -83,6 +90,7 @@ func (e *CloudWatchExecutor) transformQueryResponseToQueryResult(cloudwatchRespo
 			if len(response.SearchExpression) > 0 {
 				searchExpressions = append(searchExpressions, response.SearchExpression)
 			}
+			ids = append(ids, response.Id)
 		}
 
 		sort.Slice(timeSeries, func(i, j int) bool {
@@ -94,6 +102,7 @@ func (e *CloudWatchExecutor) transformQueryResponseToQueryResult(cloudwatchRespo
 		}
 		results[refID].Series = append(results[refID].Series, timeSeries...)
 		results[refID].Meta.Set("searchExpressions", searchExpressions)
+		results[refID].Meta.Set("Ids", ids)
 	}
 
 	return results
