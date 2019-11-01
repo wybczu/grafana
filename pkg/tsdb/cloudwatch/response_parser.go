@@ -64,9 +64,8 @@ func parseGetMetricDataTimeSeries(metricDataResults map[string]*cloudwatch.Metri
 		}
 
 		for _, message := range metricDataResult.Messages {
-			plog.Info("ArithmeticError", *message.Code, *message.Value)
 			if *message.Code == "ArithmeticError" {
-				return &result, fmt.Errorf("ArithmeticError in query %s: %s", query.RefId, *message.Value)
+				return &result, &queryError{fmt.Errorf("ArithmeticError in query %s: %s", query.RefId, *message.Value), query.RefId}
 			}
 		}
 
@@ -116,8 +115,12 @@ func formatAlias(query *cloudWatchQuery, stat string, dimensions map[string]stri
 		stat = strings.Trim(query.Expression[sIndex+1:pIndex], " '")
 	}
 
-	if query.isMathExpression() && len(query.Alias) == 0 {
+	if len(query.Alias) == 0 && query.isMathExpression() {
 		return query.Id
+	}
+
+	if len(query.Alias) == 0 && query.isInferredSearchExpression() {
+		return label
 	}
 
 	data := map[string]string{}
