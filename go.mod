@@ -93,7 +93,7 @@ require (
 	github.com/unknwon/com v1.0.1
 	github.com/urfave/cli/v2 v2.3.0
 	github.com/vectordotdev/go-datemath v0.1.1-0.20220323213446-f3954d0b18ae
-	github.com/weaveworks/common v0.0.0-20210913144402-035033b78a78
+	github.com/weaveworks/common v0.0.0-20210913144402-035033b78a78 // indirect
 	github.com/xorcare/pointer v1.1.0
 	github.com/yudai/gojsondiff v1.0.0
 	go.opentelemetry.io/collector v0.31.0
@@ -111,7 +111,7 @@ require (
 	golang.org/x/tools v0.1.9
 	gonum.org/v1/gonum v0.11.0
 	google.golang.org/api v0.62.0
-	google.golang.org/grpc v1.42.0
+	google.golang.org/grpc v1.45.0
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/ini.v1 v1.66.2
