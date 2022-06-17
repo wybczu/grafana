@@ -21,7 +21,7 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/Masterminds/semver v1.5.0
 	github.com/VividCortex/mysqlerr v0.0.0-20170204212430-6c6b55f8796f
-	github.com/aws/aws-sdk-go v1.43.31
+	github.com/aws/aws-sdk-go v1.44.36
 	github.com/beevik/etree v1.1.0
 	github.com/benbjohnson/clock v1.1.0
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b
@@ -337,3 +337,8 @@ replace github.com/tidwall/match => github.com/tidwall/match v1.1.1
 replace github.com/hashicorp/go-hclog => github.com/hashicorp/go-hclog v0.16.1
 
 replace github.com/microcosm-cc/bluemonday => github.com/microcosm-cc/bluemonday v1.0.18
+
+// This is a patched v0.8.2 intended to fix session.Find (and others) silently ignoring SQLITE_BUSY errors. This could
+// happen, for example, during a read when the sqlite db is under heavy write load.
+// This patch cherry picks compatible fixes from upstream xorm PR#1998 and can be reverted on upgrade to xorm v1.2.0+.
+replace xorm.io/xorm => github.com/grafana/xorm v0.8.3-0.20220614223926-2fcda7565af6
