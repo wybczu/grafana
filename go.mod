@@ -21,7 +21,7 @@ require (
 	github.com/BurntSushi/toml v1.1.0
 	github.com/Masterminds/semver v1.5.0
 	github.com/VividCortex/mysqlerr v0.0.0-20170204212430-6c6b55f8796f
-	github.com/aws/aws-sdk-go v1.44.9
+	github.com/aws/aws-sdk-go v1.44.71
 	github.com/beevik/etree v1.1.0
 	github.com/benbjohnson/clock v1.1.0
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b
@@ -51,7 +51,7 @@ require (
 	github.com/google/wire v0.5.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/gosimple/slug v1.12.0
-	github.com/grafana/cuetsy v0.0.3
+	github.com/grafana/cuetsy v0.0.4-0.20220714174355-ebd987fdab27
 	github.com/grafana/grafana-aws-sdk v0.10.8
 	github.com/grafana/grafana-azure-sdk-go v1.3.0
 	github.com/grafana/grafana-plugin-sdk-go v0.139.0
