@@ -156,7 +156,7 @@ require (
 	github.com/tjhop/slog-gokit v0.1.3 // @grafana/grafana-app-platform-squad
 	github.com/ua-parser/uap-go v0.0.0-20250213224047-9c035f085b90 // @grafana/grafana-backend-group
 	github.com/urfave/cli v1.22.16 // indirect; @grafana/grafana-backend-group
-	github.com/urfave/cli/v2 v2.27.1 // @grafana/grafana-backend-group
+	github.com/urfave/cli/v2 v2.27.6 // @grafana/grafana-backend-group
 	github.com/wk8/go-ordered-map v1.0.0 // @grafana/grafana-backend-group
 	github.com/xlab/treeprint v1.2.0 // @grafana/observability-traces-and-profiling
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // @grafana/grafana-operator-experience-squad
@@ -516,7 +516,7 @@ require (
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
+	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
 	github.com/yudai/pp v2.0.1+incompatible // indirect
 	github.com/yuin/gopher-lua v1.1.1 // indirect
